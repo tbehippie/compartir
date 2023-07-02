@@ -7,8 +7,7 @@
 - Front-End : HTML, CSS, JavaScript, Thymeleaf, Bootstrap<br>
 - Back-End : Java11, Dependencies(Spring Web, Spring Data JDBC, H2, Lombok, Thymeleaf)<br>
 <br>
-
-✔구현한 부분 소개<br>
+💎구현한 부분 소개💎<br>
 ⦁ 관리자 공지사항 기능 구현(게시판 조회/등록/수정/삭제) <br>
   : MVC(Domain, Repository, Service, Controller), Thymeleaf 작성<br>
 ⦁ Test코드 작성(@SpringBootTest 유닛테스트 사용)<br>
