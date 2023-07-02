@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>공지사항 수정</title>
+<!-- BootStrap -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+	crossorigin="anonymous" />
+<!-- custom CSS -->
+<!-- 실제 적용할 코드 -->
+<link th:href="@{/css/form.css}" rel="stylesheet" />
+</head>
+<body>
+	<div id="wrap">
+		<div class="justify-content-center">
+			<div class="d-flex align-items-stretch">
+				<!-- navigation -->
+				<div class="navigation px-5 mt-3">
+					<div class="mb-4">
+						<a href="/users"><img th:src="@{/image/logo.png}" /></a>
+					</div>
+					<div class="m-3">
+						<a href="/users"><img class="profile-picture" alt="본인 프로필 사진"
+							th:src="@{${loginUser.profile}}"  /></a> <span class="ms-2" th:text="${loginUser.userName}">유저이름</span>
+					</div>
+					<div class="list-group">
+						<a href="/users" class="list-group-item list-group-item-action"> <img
+							class="nav-icon" th:src="@{/image/nav-list-profile.png}" />계정목록
+						</a> <a href="/noti/list"
+							class="list-group-item list-group-item-action"> <img
+							class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항
+						</a>
+						<a href="/logout" class="list-group-item list-group-item-action">
+							<img class="nav-icon" th:src="@{/image/logout.png}" />로그아웃
+						</a>
+					</div>
+				</div>
+				
+
+
+          <!-- contents -->
+          <div class="row justify-content-center">
+            <!-- search-bar -->
+            <div class="search-bar container p-3">
+              <form action="/profile/search">
+                <div class="row align-items-center">
+                  <div class="col-6 offset-2">
+                    <input
+                      class="form-control col-2"
+                      type="text"
+                      name="search"
+                      placeholder="검색..."
+                    />
+                  </div>
+                  <div class="col-auto">
+                    <input
+                      class="btn btn-primary m-2 custom-button-search"
+                      type="submit"
+                      value="찾기"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+
+				<div class="container">
+					<div class="d-flex justify-content-center">
+						<div class="custom-form">
+							<div class="text-center mb-3">
+								<h1>공지사항 수정</h1>
+							</div>
+							
+							<form th:action="@{/noti/{notiId}/edit(notiId=${noti.notiId})}" method="post">
+								<fieldset class="custom-fieldset">
+									<div class="form-floating mb-3">
+										<input name="notiTitle" class="form-control" type="text"
+											placeholder="제목입력" th:value="${noti.notiTitle}">
+										<!-- name="title" 추가 -->
+										<label for="floatingTextarea">제목</label>
+									</div>
+									<div class="form-floating mb-3">
+										<textarea name="notiContent" class="form-control"
+											id="floatingTextarea" style="height: 350px"
+											placeholder="텍스트 상자(500자)" th:text="${noti.notiContent}"></textarea>
+										<!-- name="content" 추가 -->
+										<label for="floatingTextarea">내용</label>
+									</div>
+									<div class="text-center row">
+										<button class="col btn btn-primary m-2 custom-button"
+											type="button" onclick="javascript:window.history.back();">취소</button>
+										<button class="col btn btn-primary m-2 custom-button"
+											type="submit">저장</button>
+									</div>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

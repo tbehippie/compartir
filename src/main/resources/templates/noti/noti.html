@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>게시물</title>
+<!-- BootStrap -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+	crossorigin="anonymous" />
+<!-- custom CSS -->
+<!-- 실제 적용할 코드 -->
+<link th:href="@{/css/form.css}" rel="stylesheet" />
+</head>
+<body>
+	<div id="wrap">
+		<div class="justify-content-center">
+			<div class="d-flex align-items-stretch">
+				<!-- navigation -->
+				<div class="navigation px-5 mt-3">
+					<div class="mb-4" th:if="${auth}">
+						<a href="/users"><img th:src="@{/image/logo.png}" /></a>
+					</div>
+					<div class="mb-4" th:if="${loginUser.auth}==0">
+						<img th:src="@{/image/logo.png}" />
+					</div>
+					<div class="mb-4" th:if="${loginUser.auth}==1 and ${!auth}">
+						<a href="/"><img th:src="@{/image/logo.png}" /></a>
+					</div>
+					<div th:if="${auth}">
+						<div class="m-3">
+							<a href="/users"><img class="profile-picture" alt="본인 프로필 사진"
+								th:src="@{${loginUser.profile}}" /></a> <span class="ms-2"
+								th:text="${loginUser.userName}">유저이름</span>
+						</div>
+						<div class="list-group">
+							<a href="/users" class="list-group-item list-group-item-action">
+								<img class="nav-icon" th:src="@{/image/nav-list-profile.png}" />계정목록
+							</a> <a href="/noti/list"
+								class="list-group-item list-group-item-action"> <img
+								class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항
+							</a> <a href="/logout" class="list-group-item list-group-item-action">
+								<img class="nav-icon" th:src="@{/image/logout.png}" />로그아웃
+							</a>
+						</div>
+					</div>
+					<div th:if="${loginUser.auth} == 0">
+						<div class="m-3">
+							<img class="profile-picture" alt="본인 프로필 사진"
+								th:src="@{${loginUser.profile}}" /> <span class="ms-2"
+								th:text="${loginUser.userName}">유저이름</span>
+						</div>
+						<div class="list-group">
+							<a href="/noti/list"
+								class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항</a> <a
+								href="/logout" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/logout.png}" />로그아웃</a>
+						</div>
+					</div>
+					<div th:if="${loginUser.auth}==1 and ${!auth}">
+						<div class="m-3">
+							<a th:href="@{/profile/{userId}(userId=${loginUser.userId})}"><img
+								class="profile-picture" alt="본인 프로필 사진"
+								th:src="@{${loginUser.profile}}" /></a> <span class="ms-2"
+								th:text="${loginUser.userName}">유저이름</span>
+						</div>
+						<div class="list-group">
+							<a th:href="@{/profile/{userId}(userId=${loginUser.userId})}"
+								class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/nav-list-profile.png}" />내
+								프로필</a> <a href="/post/create"
+								class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/writing.png}" />게시물 작성</a> <a
+								href="/noti/list" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항</a> <a
+								href="/logout" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/logout.png}" />로그아웃</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- contents -->
+				<div class="row justify-content-center container">
+					<!-- search-bar -->
+					<div class="search-bar container p-3">
+						<form action="/profile/search" th:if="${loginUser.auth}!=0">
+							<div class="row align-items-center">
+								<div class="col-6 offset-2">
+									<input class="form-control col-2" type="text" name="search"
+										placeholder="검색..." />
+								</div>
+								<div class="col-auto">
+									<input class="btn btn-primary m-2 custom-button-search"
+										type="submit" value="찾기" />
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- form or content -->
+					<div class="noti">
+						<div class="row mb-3"> 
+						<h3 class="col" th:text="${noti.notiTitle}">공지사항 제목</h3>
+						<div class="col edit-button" th:if="${auth}">
+							<a th:href="@{/noti/{notiId}/edit(notiId=${noti.notiId})}"
+								class="post-edit edit-profile"> <img class="icon"
+								th:src="@{/image/edit.png}" />수정
+							</a>
+
+							<form th:action="@{/noti/{notiId}/del(notiId=${noti.notiId})}"
+								class="d-inline" method="post">
+								<button class="post-del edit-profile del-button" type="submit">
+									<img class="icon" th:src="@{/image/delete.png}" />삭제
+								</button>
+							</form>
+						</div>
+						 <textarea class="form-control" rows="20" th:text="${noti.notiContent}" readonly></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

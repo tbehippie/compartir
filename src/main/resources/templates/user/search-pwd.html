@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비밀번호 검색</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <link th:href="@{/css/form.css}" rel="stylesheet">
+  <style>
+    .container{
+    	margin-top : 120px;
+    } 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <div class="custom-form">
+        <div class="text-center mb-3"><h1>비밀번호 찾기</h1></div>
+        <fieldset class="custom-fieldset">
+          <form action="/pw" method="post">
+              <div class="form-floating mb-3"><input class="form-control" id="floatingId" type="text" name="userName" placeholder="아이디">  <label for="floatingId">아이디</label></div>
+              <div class="form-floating mb-3"><input class="form-control" type="email" name="email" placeholder="이메일"> <label for="">이메일</label></div>
+            <div class="w-100 mx-auto text-center row border-top border-2 pt-2">
+              <button class="col btn btn-primary m-2 ms-0 custom-button" type="button" onclick="location.href='/login'">취소</button>
+              <button class="col btn btn-primary m-2 me-0 custom-button" type="submit">제출</button>
+            </div>
+             </form>
+          </fieldset>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>게시물</title>
+<!-- BootStrap -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+	crossorigin="anonymous" />
+<!-- custom CSS -->
+<!-- 실제 적용할 코드 -->
+<link th:href="@{/css/form.css}" rel="stylesheet" />
+</head>
+<body>
+	<div id="wrap">
+		<div class="justify-content-center">
+			<div class="d-flex align-items-stretch">
+				<!-- navigation -->
+				<div class="navigation px-5 mt-3">
+					<div class="mb-4" th:if="${auth}">
+						<a href="/users"><img th:src="@{/image/logo.png}" /></a>
+					</div>
+					<div class="mb-4" th:unless="${auth}">
+						<a href="/"><img th:src="@{/image/logo.png}" /></a>
+					</div>
+					<div th:if="${auth}">
+						<div class="m-3">
+							<a href="/users"><img class="profile-picture" alt="본인 프로필 사진"
+								th:src="@{${loginUser.profile}}" /></a> <span class="ms-2"
+								th:text="${loginUser.userName}">유저이름</span>
+						</div>
+						<div class="list-group">
+							<a href="/users" class="list-group-item list-group-item-action">
+								<img class="nav-icon" th:src="@{/image/nav-list-profile.png}" />계정목록
+							</a> <a href="/noti/list"
+								class="list-group-item list-group-item-action"> <img
+								class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항
+							</a> <a href="/login" class="list-group-item list-group-item-action">
+								<img class="nav-icon" th:src="@{/image/logout.png}" />로그아웃
+							</a>
+						</div>
+					</div>
+					<div th:if="${loginUser} != null and ${!auth}">
+						<div class="m-3">
+							<a th:href="@{/profile/{userId}(userId=${loginUser.userId})}"><img
+								class="profile-picture" alt="본인 프로필 사진"
+								th:src="@{${loginUser.profile}}" /></a> <span class="ms-2"
+								th:text="${loginUser.userName}">유저이름</span>
+						</div>
+						<div class="list-group">
+							<a th:href="@{/profile/{userId}(userId=${loginUser.userId})}"
+								class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/nav-list-profile.png}" />내
+								프로필</a> <a href="/post/create"
+								class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/writing.png}" />게시물 작성</a> <a
+								href="/noti/list" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/megaphone.png}" />공지사항</a> <a
+								href="/logout" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/logout.png}" />로그아웃</a>
+						</div>
+					</div>
+					<div th:if="${loginUser} == null">
+						<div class="list-group">
+							<a href="/login" class="list-group-item list-group-item-action"><img
+								class="nav-icon" th:src="@{/image/login.png}" />로그인</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- contents -->
+				<div class="row justify-content-center">
+					<!-- search-bar -->
+					<div class="search-bar container p-3">
+						<form action="/profile/search">
+							<div class="row align-items-center">
+								<div class="col-6 offset-2">
+									<input class="form-control col-2" type="text" name="search"
+										placeholder="검색..." />
+								</div>
+								<div class="col-auto">
+									<input class="btn btn-primary m-2 custom-button-search"
+										type="submit" value="찾기" />
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- form or content -->
+					<div class="post">
+						<div class="row post-info mb-3">
+							<a th:href="@{/profile/{userId}(userId=${writer.userId})}"
+								class="col-1"><img class="post-profile-icon"
+								alt="게시물 프로필 사진" th:src="@{${writer.profile}}" /></a>
+							<div class="col align-self-center">
+								<div class="row justify-content-between">
+									<div class="col">
+										<span class="" th:text="${writer.userName}">유저이름</span> <span
+											class="" th:text="${post.date}">게시 날짜</span>
+									</div>
+									<!-- 작성자와 로그인한 유저 비교 후 표현 버튼 -->
+									<div class="col edit-button"
+										th:if="${loginUser} != null and ${loginUser.userId} == ${writer.userId}">
+										<button type="button"
+											th:onclick="|location.href='@{/post/{postId}/edit(postId=${post.postId})}'|"
+											class="post-edit edit-profile del-button">
+											<img class="icon" th:src="@{/image/edit.png}" />수정
+										</button>
+										<button class="post-del edit-profile del-button d-inline"
+											type="button" data-bs-toggle="modal"
+											data-bs-target="#postDeleteModal">
+											<img class="icon" th:src="@{/image/delete.png}" />삭제
+										</button>
+										<!-- Modal -->
+										<div class="modal fade" id="postDeleteModal" tabindex="-1"
+											aria-labelledby="modalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h1 class="modal-title fs-5" id="modalLabel">게시물 삭제</h1>
+														<button type="button" class="btn-close"
+															data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body text-start">게시글을 정말 삭제하시겠습니까?
+													</div>
+													<div class="modal-footer">
+														<form
+															th:action="@{/post/{postId}/del(postId=${post.postId})}"
+															method="post">
+															<button type="submit" class="btn btn-secondary">삭제</button>
+															<button type="button" class="btn btn-primary"
+																data-bs-dismiss="modal">취소</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col edit-button" th:if="${auth}">
+									<button class="btn post-del edit-profile del-button d-inline"
+										type="button" data-bs-toggle="modal"
+										data-bs-target="#postDeleteModal">
+										<img class="icon" th:src="@{/image/delete.png}" />삭제
+									</button>
+									<!-- Modal -->
+									<div class="modal fade" id="postDeleteModal" tabindex="-1"
+										aria-labelledby="modalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="modalLabel">게시물 삭제</h1>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body text-start">게시글을 정말 삭제하시겠습니까?</div>
+												<div class="modal-footer">
+													<form
+														th:action="@{/post/{postId}/del(postId=${post.postId})}"
+														method="post">
+														<button type="submit" class="btn btn-secondary">삭제</button>
+														<button type="button" class="btn btn-primary"
+															data-bs-dismiss="modal">취소</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row img-fluid" th:if="${post.postImage} != null">
+							<img th:src="@{${post.postImage}}" alt="게시물 사진"
+								class="post-image" />
+						</div>
+						<div class="row">
+							<span th:text="${post.postContent}" class="content">Lorem
+								ipsum, dolor sit amet consectetur adipisicing elit. Magnam
+								suscipit iure laudantium, necessitatibus quam maiores, voluptas
+								vero mollitia nihil reiciendis inventore eveniet porro quisquam
+								sed? Dolor fugit quisquam fuga minus?</span>
+							<div class="like">
+								<a href="" class="like-count"> <img class="like-button"
+									th:src="@{/image/heart.png}" /></a> <span> 좋아요 개</span>
+							</div>
+							<div class="reply">
+								<a href="/post" class="reply-link">댓글 개 모두 보기</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+		crossorigin="anonymous"></script>
+</body>
+</html>
