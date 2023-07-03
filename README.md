@@ -16,7 +16,7 @@
 
 ✔ 웹페이지
 
-1) 관리자(아이디admin/비밀번호1234) 로그인
+<h2> 1) 관리자(아이디admin/비밀번호1234) 로그인</h2>
    ![로그인](https://github.com/tbehippie/compartir/assets/122521832/f5fc9165-1578-4a75-a746-95c35be2ebd1)
 3) 공지사항 목록페이지
    ![공지사항페이지](https://github.com/tbehippie/compartir/assets/122521832/2a57456e-ff66-4e43-b47f-186a8b87dc15)
