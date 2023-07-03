@@ -13,3 +13,16 @@
 ⦁ Test코드 작성(@SpringBootTest 유닛테스트 사용)<br>
 ⦁ 게시글 프론트 페이지(post.html) 구현<br>
 ⦁ 트러블슈팅<br>
+
+✔ 웹페이지
+
+1) 관리자(아이디admin/비밀번호1234) 로그인
+   ![로그인](https://github.com/tbehippie/compartir/assets/122521832/f5fc9165-1578-4a75-a746-95c35be2ebd1)
+3) 공지사항 목록페이지
+   ![공지사항페이지](https://github.com/tbehippie/compartir/assets/122521832/2a57456e-ff66-4e43-b47f-186a8b87dc15)
+5) 공지사항 작성
+   ![공지작성](https://github.com/tbehippie/compartir/assets/122521832/931490f7-e690-40a4-8ef4-61e28f9bdf02)
+7) 공지사항 수정폼
+   ![공지수정1-2](https://github.com/tbehippie/compartir/assets/122521832/a1166ca2-0e1d-4786-a9a4-3be19703b2b4)
+9) 공지사항 수정 및 삭제
+   ![공지수정1-1 + 삭제](https://github.com/tbehippie/compartir/assets/122521832/2621f102-6ad5-4b2a-894c-cc3ecf684ba1)
